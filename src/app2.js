@@ -4,13 +4,13 @@ import $ from 'jquery'
 const $tabBar = $('#app2 .tab-bar');
 const $tabContent = $('#app2 .tab-content');
 $tabBar.on('click','li',e=>{
-    console.log(e.currentTarget);
+   //  console.log(e.currentTarget);
     const $li = $(e.currentTarget);
     $li.addClass('selected')
        .siblings()
-       .removeClass('selected')
+       .removeClass('selected');
     const index = $li.index();
-    console.log(index);
+   localStorage.setItem('app2-index',index);
     $tabContent.children()
                .eq(index)
                .addClass('active')
@@ -18,4 +18,5 @@ $tabBar.on('click','li',e=>{
                .removeClass('active')
 
 });
-$tabBar.children().eq(0).trigger('click')
+const keyIndex =localStorage.getItem('app2-index')
+$tabBar.children().eq(keyIndex).trigger('click')

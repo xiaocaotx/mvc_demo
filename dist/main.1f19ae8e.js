@@ -11342,14 +11342,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var $tabBar = (0, _jquery.default)('#app2 .tab-bar');
 var $tabContent = (0, _jquery.default)('#app2 .tab-content');
 $tabBar.on('click', 'li', function (e) {
-  console.log(e.currentTarget);
+  //  console.log(e.currentTarget);
   var $li = (0, _jquery.default)(e.currentTarget);
   $li.addClass('selected').siblings().removeClass('selected');
   var index = $li.index();
-  console.log(index);
+  localStorage.setItem('app2-index', index);
   $tabContent.children().eq(index).addClass('active').siblings().removeClass('active');
 });
-$tabBar.children().eq(0).trigger('click');
+var keyIndex = localStorage.getItem('app2-index');
+$tabBar.children().eq(keyIndex).trigger('click');
 },{"./app2.css":"app2.css","jquery":"../node_modules/jquery/dist/jquery.js"}],"app3.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
@@ -22241,9 +22242,25 @@ var _jQuery = _interopRequireDefault(require("jQuery"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var $square = (0, _jQuery.default)('#app3 .square');
+var $square = (0, _jQuery.default)('#app3 .square'); //获取并还原状态
+
+var active = localStorage.getItem('app3-active') === "yes";
+
+if (active) {
+  $square.addClass('active');
+} else {
+  $square.removeClass('active');
+} // $square.toggleClass('active',active);
+
+
 $square.on('click', function () {
-  $square.toggleClass('active');
+  if ($square.hasClass('active')) {
+    $square.removeClass('active');
+    localStorage.setItem('app3-active', 'no');
+  } else {
+    $square.addClass('active');
+    localStorage.setItem('app3-active', 'yes');
+  }
 });
 },{"./app3.css":"app3.css","jQuery":"../node_modules/jQuery/dist/jquery.js"}],"app4.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
@@ -22311,7 +22328,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59660" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51529" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
